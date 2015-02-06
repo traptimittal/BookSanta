@@ -1,19 +1,13 @@
-package com.booksanta;
+package com.booksanta.DAO;
 
 import com.booksanta.Models.Book;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by Trapti on 2/7/2015.
  */
-
-public class MySqlConnection {
+public class BookDAO {
     private final String jdbcDriverStr;
     private final String jdbcURL;
 
@@ -26,7 +20,7 @@ public class MySqlConnection {
         Id,Title;
     }
 
-    public MySqlConnection(String jdbcDriverStr, String jdbcURL){
+    public BookDAO(String jdbcDriverStr, String jdbcURL){
         this.jdbcDriverStr = jdbcDriverStr;
         this.jdbcURL = jdbcURL;
     }
@@ -64,4 +58,3 @@ public class MySqlConnection {
         } catch(Exception e){}
     }
 }
-

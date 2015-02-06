@@ -1,7 +1,7 @@
 package com.booksanta.DataStore;
 
+import com.booksanta.DAO.BookDAO;
 import com.booksanta.Models.Book;
-import com.booksanta.MySqlConnection;
 
 /**
  * Created by Trapti on 2/7/2015.
@@ -12,7 +12,7 @@ public class BookDataStore {
             + "user=trapti&password=trapti";
 
     public static Book getBook(int id){
-        MySqlConnection dao = new MySqlConnection(MYSQL_DRIVER,MYSQL_URL);
+        BookDAO dao = new BookDAO(MYSQL_DRIVER,MYSQL_URL);
         Book b = new Book();
         try {
             b = dao.readData(id);
