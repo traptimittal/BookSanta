@@ -10,6 +10,7 @@ import io.dropwizard.setup.Environment;
  *
  */
 public class BookSantaApplication extends Application<BookSantaConfiguration> {
+
     public static void main(String[] args) throws Exception {
         new BookSantaApplication().run(args);
     }

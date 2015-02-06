@@ -1,6 +1,8 @@
 package com.booksanta.Resources;
 
+import com.booksanta.DataStore.BookDataStore;
 import com.booksanta.Models.Book;
+import com.booksanta.MySqlConnection;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -34,8 +36,10 @@ public class BookResource {
     }
 
     @GET
-    public Book getBook() {
-        final String value = String.format(template, defaultName);
-        return new Book(counter.incrementAndGet(), value);
+    @Path("/{id}")
+    public Book getBook(@PathParam("id") int id) {
+        return BookDataStore.getBook(id);
+        /*final String value = String.format(template, defaultName);
+        return new Book(counter.incrementAndGet(), value);*/
     }
 }
