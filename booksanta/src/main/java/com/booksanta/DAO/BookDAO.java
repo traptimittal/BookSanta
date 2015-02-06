@@ -3,6 +3,8 @@ package com.booksanta.DAO;
 import com.booksanta.Models.Book;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Trapti on 2/7/2015.
@@ -25,13 +27,19 @@ public class BookDAO {
         this.jdbcURL = jdbcURL;
     }
 
-    public Book readData(int bookId) throws Exception {
+    public List<Book> getBooks() throws Exception {
         try {
+            List<Book> books = new ArrayList<Book>();
             Class.forName(jdbcDriverStr);
             connection = DriverManager.getConnection(jdbcURL);
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from books;");
-            return getResultSet(resultSet, bookId);
+            while(resultSet.next()){
+                Integer id = resultSet.getInt(BookColumns.Id.toString());
+                String title = resultSet.getString(BookColumns.Title.toString());
+                books.add(new Book(id, title));
+            }
+            return books;
             /*preparedStatement = connection.prepareStatement("insert into books values (3,1,'The BookSanta Story')");
             preparedStatement.setString(1,"insert test from java");
             preparedStatement.executeUpdate();*/
@@ -40,14 +48,24 @@ public class BookDAO {
         }
     }
 
-    private Book getResultSet(ResultSet resultSet, int bookId) throws Exception {
-        while(resultSet.next()){
+    public Book getBook(int bookId) throws Exception {
+        try {
+            Book book = new Book();
+            Class.forName(jdbcDriverStr);
+            connection = DriverManager.getConnection(jdbcURL);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("select * from books where id=" + bookId + ";");
+            resultSet.next();
             Integer id = resultSet.getInt(BookColumns.Id.toString());
-            if (id == bookId)
-                break;
+            String title = resultSet.getString(BookColumns.Title.toString());
+            book = new Book(id, title);
+            return book;
+            /*preparedStatement = connection.prepareStatement("insert into books values (3,1,'The BookSanta Story')");
+            preparedStatement.setString(1,"insert test from java");
+            preparedStatement.executeUpdate();*/
+        }finally{
+            close();
         }
-        String title = resultSet.getString(BookColumns.Title.toString());
-        return new Book(bookId,title);
     }
 
     private void close(){
