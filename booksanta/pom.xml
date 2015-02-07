@@ -39,4 +39,50 @@
           <scope>compile</scope>
       </dependency>
   </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>0.4.7</version>
+                <configuration>
+                    <skip>false</skip>
+                    <includeJsr303Annotations>true</includeJsr303Annotations>
+                    <useLongIntegers>true</useLongIntegers>
+                    <sourceDirectory>src/main/java/com/booksanta/Schema</sourceDirectory>
+                    <outputDirectory>${basedir}/target/generated-sources</outputDirectory>
+                    <targetPackage>com.booksanta.Models</targetPackage>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/generated-sources</source>
+                                <source>src/main/java/com/booksanta/Models</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

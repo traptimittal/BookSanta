@@ -35,9 +35,12 @@ public class BookDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from books;");
             while(resultSet.next()){
-                Integer id = resultSet.getInt(BookColumns.Id.toString());
+                Long id = resultSet.getLong(BookColumns.Id.toString());
                 String title = resultSet.getString(BookColumns.Title.toString());
-                books.add(new Book(id, title));
+                Book book = new Book();
+                book.setId(id);
+                book.setTitle(title);
+                books.add(book);
             }
             return books;
             /*preparedStatement = connection.prepareStatement("insert into books values (3,1,'The BookSanta Story')");
@@ -56,9 +59,10 @@ public class BookDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select * from books where id=" + bookId + ";");
             resultSet.next();
-            Integer id = resultSet.getInt(BookColumns.Id.toString());
+            Long id = resultSet.getLong(BookColumns.Id.toString());
             String title = resultSet.getString(BookColumns.Title.toString());
-            book = new Book(id, title);
+            book.setId(id);
+            book.setTitle(title);
             return book;
             /*preparedStatement = connection.prepareStatement("insert into books values (3,1,'The BookSanta Story')");
             preparedStatement.setString(1,"insert test from java");
